@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Reservas para Actividades Culturales Universitarias</title>
+    <link rel="icon" rel="stylesheet" href="https://i.ibb.co/r2LqHr1V/crear-un-icono-para-una-p-gina-web.png">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome para íconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            background-color: #7d7e809c;
+            padding-top: 20px;
+        }
+        .header-section {
+            position: relative;
+            margin-bottom: 40px;
+            padding-top: 80px;
+        }
+        .logo-container {
+            background: linear-gradient(135deg, #0066ff, #0044cc);
+            padding: 10px 30px;
+            border-radius: 0 0 20px 0;
+            box-shadow: 0 4px 15px rgba(0, 102, 255, 0.3);
+            position: absolute;
+            top: -15px;
+            left: 0;
+            z-index: 1000;
+            transition: transform 0.5s ease;
+        }
+        .logo-container.moving {
+            animation: moveLogo 1690ms ease-in-out infinite;
+        }
+        @keyframes moveLogo {
+            0% {
+                transform: translateX(0);
+            }
+            50% {
+                transform: translateX(50px);
+            }
+            100% {
+                transform: translateX(0);
+            }
+        }
+        .uch-logo {
+            color: white;
+            position: relative;
+            font-weight: bold;
+            font-size: 3.2em;
+            animation: floatAndGlow 2.5s ease-out;
+            letter-spacing: 3px;
+            transition: all 0.5s ease;
+            text-transform: uppercase;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            margin: 0;
+            padding: 0;
+        }
+        .uch-logo:hover {
+            transform: scale(1.2) rotate(5deg);
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+            animation: floatAndGlow 2.5s ease-out infinite;
+        }
+        .container {
+            max-width: 1200px;
+        }
+        .form-container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+        .table-container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+        .btn-action {
+            margin: 0 5px;
+            width: 35px;
+        }
+        .btn-editar {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+        }
+        .btn-editar:hover {
+            background-color: #45a049;
+            color: white;
+        }
+        .btn-eliminar {
+            background-color: #f44336;
+            color: white;
+            border: none;
+        }
+        .btn-eliminar:hover {
+            background-color: #da190b;
+            color: white;
+        }
+        .header-title {
+            color: #bbc4cc;
+            margin-bottom: 30px;
+            text-align: center;
+            font-weight: bold;
+            padding-top: 20px;
+        }
+        .required-field::after {
+            content: " *";
+            color: rgb(255, 0, 0);
+        }
+        .error-message {
+            color: rgb(255, 0, 0);
+            font-size: 0.875em;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header-section">
+            <div class="logo-container" id="logoContainer">
+                <a class="uch-logo">UCH</a>
+            </div>
+            <h1 class="header-title" style="color: #000000a9;" style="font-size: 2.5em;" style="font-weight: bold;" style="text-align: center;" style="text-transform: uppercase;" style="font-family: 'Times New Roman', Times, serif;" style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);" aria-sort="none"> <strong>GESTIÓN DE RESERVAS PARA ACTIVIDADES CULTURALES UNIVERSITARIAS</strong></h1>
+        </div>
+        
+        <!-- Formulario de Registro -->
+        <div class="form-container" style="background-color: hsl(209, 47%, 82%);">
+            <h2 class="mb-4"><i class="fas fa-calendar-plus me-2" style="color: #0042cf;"></i>Formulario de Reserva</h2>
+            <form id="reservaForm">
+                <input type="hidden" id="reservaId">
+                
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="nombre" class="form-label required-field">Nombre completo del estudiante</label>
+                        <input type="text" class="form-control" id="nombre" placeholder="Ingrese nombre completo">
+                        <div id="nombreError" class="error-message"></div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="matricula" class="form-label required-field">Código de matrícula</label>
+                        <input type="text" class="form-control" id="matricula" placeholder="Ingrese código de 8 caracteres">
+                        <div id="matriculaError" class="error-message"></div>
+                    </div>
+                </div>
+                
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="actividad" class="form-label required-field">Tipo de actividad</label>
+                        <select class="form-select" id="actividad">
+                            <option value="" selected disabled>Seleccione una actividad</option>
+                            <option value="Teatro">Teatro</option>
+                            <option value="Taller de Dibujo">Taller de Dibujo</option>
+                            <option value="Club de Lectura">Club de Lectura</option>
+                            <option value="Excursión Cultural">Excursión Cultural</option>
+                            <option value="Taller de Música">Taller de Música</option>
+                            <option value="Cine Foro">Cine Foro</option>
+                            <option value="Taller de Danza">Taller de Danza</option>
+                            <option value="Conferencia Cultural">Conferencia Cultural</option>
+                        </select>
+                        <div id="actividadError" class="error-message"></div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="fecha" class="form-label required-field">Fecha de la actividad</label>
+                        <input type="date" class="form-control" id="fecha">
+                        <div id="fechaError" class="error-message"></div>
+                    </div>
+                </div>
+                
+                <div class="d-flex justify-content-end">
+                    <button type="button" class="btn btn-secondary me-2" id="btnLimpiar" style="background-color: #6a6992;">
+                        <i class="fas fa-broom me-1" style="color: #86300ffa;"></i> Limpiar
+                    </button>
+                    <button type="submit" class="btn btn-primary" id="btnGuardar" style="background-color: #5a58be;">
+                        <i class="fas fa-save me-1" style="color: rgb(250, 182, 36);"></i> Guardar Reserva
+                    </button>
+                </div>
+            </form>
+        </div>
+        
+        <!-- Tabla de Reservas -->
+        <div class="table-container" style="background-color: hsl(209, 47%, 82%);">
+            <h2 class="mb-4"><i class="fas fa-list me-2" style="color: #0042cf;"></i>Listado de Reservas</h2>
+            
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Matrícula</th>
+                            <th>Actividad</th>
+                            <th>Fecha</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaReservas">
+                        <!-- Las reservas se cargarán aquí dinámicamente -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="alert alert-warning mt-3" id="sinReservas" style="display: none;">
+                <i class="fas fa-info-circle me-2"></i>No hay reservas registradas.
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Confirmación -->
+    <div class="modal fade" id="confirmModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirmar Eliminación</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    ¿Está seguro que desea eliminar esta reserva?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" id="btnConfirmarEliminar">Eliminar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Nuestro script JS -->
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const logoContainer = document.getElementById('logoContainer');
+            let isMoving = false;
+
+            function toggleMovement() {
+                if (!isMoving) {
+                    logoContainer.classList.add('moving');
+                    isMoving = true;
+                } else {
+                    logoContainer.classList.remove('moving');
+                    isMoving = false;
+                }
+            }
+
+            // Iniciar la animación al cargar la página
+            setTimeout(toggleMovement, 1000);
+
+            // Opcional: Permitir al usuario controlar la animación haciendo clic
+            logoContainer.addEventListener('click', toggleMovement);
+        });
+    </script>
+</body>
+</html>
