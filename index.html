@@ -21,14 +21,21 @@
         }
         .logo-container {
             background: linear-gradient(135deg, #0066ff, #0044cc);
-            padding: 10px 30px;
-            border-radius: 0 0 20px 0;
+            padding: 15px 25px;
+            border-radius: 15px;
             box-shadow: 0 4px 15px rgba(0, 102, 255, 0.3);
             position: absolute;
             top: -15px;
-            left: 0;
             z-index: 1000;
             transition: transform 0.5s ease;
+        }
+        #logoContainer {
+            left: 20px;
+            border-radius: 15px 0 15px 15px;
+        }
+        #logoContainer2 {
+            right: 20px;
+            border-radius: 0 15px 15px 15px;
         }
         .logo-container.moving {
             animation: moveLogo 1690ms ease-in-out infinite;
@@ -56,6 +63,8 @@
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
             margin: 0;
             padding: 0;
+            text-decoration: none;
+            display: inline-block;
         }
         .uch-logo:hover {
             transform: scale(1.2) rotate(5deg);
@@ -67,20 +76,39 @@
         }
         .form-container {
             background-color: white;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
             margin-bottom: 30px;
         }
         .table-container {
             background-color: white;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+        .table {
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        .table thead th {
+            background-color: #0044cc;
+            color: white;
+            border: none;
+            padding: 15px;
+        }
+        .table tbody td {
+            padding: 12px 15px;
+            vertical-align: middle;
         }
         .btn-action {
             margin: 0 5px;
-            width: 35px;
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
         }
         .btn-editar {
             background-color: #4CAF50;
@@ -121,8 +149,11 @@
 <body>
     <div class="container">
         <div class="header-section">
-            <div class="logo-container" id="logoContainer">
-                <a class="uch-logo">UCH</a>
+            <div class="logo-container" id="logoContainer" style="left: 0;">
+                <a class="uch-logo">📚</a>
+            </div>
+            <div class="logo-container" id="logoContainer2" style="right: 0; left: auto;">
+                <a class="uch-logo">🎭</a>
             </div>
             <h1 class="header-title" style="color: #000000a9;" style="font-size: 2.5em;" style="font-weight: bold;" style="text-align: center;" style="text-transform: uppercase;" style="font-family: 'Times New Roman', Times, serif;" style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);" aria-sort="none"> <strong>GESTIÓN DE RESERVAS PARA ACTIVIDADES CULTURALES UNIVERSITARIAS</strong></h1>
         </div>
@@ -234,14 +265,17 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const logoContainer = document.getElementById('logoContainer');
+            const logoContainer2 = document.getElementById('logoContainer2');
             let isMoving = false;
 
             function toggleMovement() {
                 if (!isMoving) {
                     logoContainer.classList.add('moving');
+                    logoContainer2.classList.add('moving');
                     isMoving = true;
                 } else {
                     logoContainer.classList.remove('moving');
+                    logoContainer2.classList.remove('moving');
                     isMoving = false;
                 }
             }
@@ -251,6 +285,7 @@
 
             // Opcional: Permitir al usuario controlar la animación haciendo clic
             logoContainer.addEventListener('click', toggleMovement);
+            logoContainer2.addEventListener('click', toggleMovement);
         });
     </script>
 </body>
